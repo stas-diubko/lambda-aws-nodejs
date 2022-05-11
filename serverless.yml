@@ -1,0 +1,83 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: serverless-lambda
+
+frameworkVersion: '3'
+
+custom:
+  bucket: serverless-lambda
+provider:
+  name: aws
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 's3:ListBucket'
+          Resource:
+            Fn::Join:
+              - ''
+              - - 'arn:aws:s3:::'
+                - Ref: ServerlessDeploymentBucket
+        - Effect: 'Allow'
+          Action:
+            - 's3:PutObject'
+          Resource:
+            Fn::Join:
+              - ''
+              - - 'arn:aws:s3:::'
+                - Ref: ServerlessDeploymentBucket
+                - '/*' 
+# you can overwrite defaults here
+#  stage: dev
+#  region: us-east-1
+
+functions: 
+  create:
+    handler: handler.create
+    events:
+      - http: 
+          path: notes
+          method: post
+          cors: true
+  getOne:
+    handler: handler.getOne
+    events:
+      - http: 
+          path: notes/{id}
+          method: get
+          cors: true
+  getAll:
+    handler: handler.getAll
+    events:
+      - http: 
+          path: notes
+          method: get
+          cors: true
+  update:
+    handler: handler.update
+    events:
+      - http: 
+          path: notes/{id}
+          method: put
+          cors: true
+  delete:
+    handler: handler.delete
+    events:
+      - http: 
+          path: notes/{id}
+          method: delete
+          cors: true
+plugins:
+- serverless-offline # adding the plugin to be able to run the offline emulation

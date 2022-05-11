@@ -1,0 +1,32 @@
+### create note
+POST http://localhost:3000/dev/notes
+content-type: application/json
+
+{
+   "title": "another note",
+   "description": "another description",
+   "reminder": false
+}
+
+### get note
+GET http://localhost:3000/dev/notes/627b92fe6ece43e31b4bf8ca
+content-type: application/json
+
+### get all notes
+GET http://localhost:3000/dev/notes
+content-type: application/json
+
+### update note
+PUT http://localhost:3000/dev/notes/627b940a8e4e7a7f87b71370
+content-type: application/json
+
+{
+   "title": "third note",
+   "description": "third description",
+   "reminder": false
+}
+
+### delete note
+DELETE http://localhost:3000/dev/notes/627b967afe98010fa30c9a54
+content-type: application/json
+
